@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: mbweb
-        image: quay.io/mmondics/mbweb-pg:v1-manifest
+        image: quay.io/mmondics/mbweb-pg:v3-manifest
         imagePullPolicy: Always
         env:
         - name: MegaBankComponentClass

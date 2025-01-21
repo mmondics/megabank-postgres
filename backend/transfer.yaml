@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: transfer
-        image: quay.io/mmondics/mbsvc-pg:v1-manifest
+        image: quay.io/mmondics/mbsvc-pg:v3-manifest
         imagePullPolicy: Always
         env:
         - name: POSTGRES_PASSWORD
