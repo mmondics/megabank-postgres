@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mbpg
+  namespace: megabank-pg
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      deployment: mbpg
+  template:
+    metadata:
+      labels:
+        deployment: mbpg
+    spec:
+      containers:
+      - name: mbpg
+        image: quay.io/mmondics/mbpg:v2-manifest
+        imagePullPolicy: Always
+        env:
+        - name: POSTGRES_PASSWORD
+          value: passw0rd
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: mbpg
+  namespace: megabank-pg
+  labels:
+    app: mbpg
+spec:
+  ports:
+    - name: 5432-5432
+      protocol: TCP
+      port: 5432
+      targetPort: 5432
+  type: ClusterIP
+  selector:
+    deployment: mbpg

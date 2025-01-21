@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mbweb
+  namespace: megabank-pg
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      deployment: mbweb
+  template:
+    metadata:
+      labels:
+        deployment: mbweb
+    spec:
+      containers:
+      - name: mbweb
+        image: quay.io/mmondics/mbweb-pg:v1-manifest
+        imagePullPolicy: Always
+        env:
+        - name: MegaBankComponentClass
+          value: com.ibm.cpo.mb.MegaBankJDBCWS
+        - name: MegaCookieName
+          value: MEGABANK
+        - name: WITHDRAW_SVC_HOST
+          value: withdraw.megabank-pg.svc.cluster.local:9080
+        - name: TRANSFER_SVC_HOST
+          value: transfer.megabank-pg.svc.cluster.local:9080
+        - name: LOGIN_SVC_HOST
+          value: login.megabank-pg.svc.cluster.local:9080
+        - name: HISTORY_SVC_HOST
+          value: history.megabank-pg.svc.cluster.local:9080
+        - name: CUSTOMER_SVC_HOST
+          value: customer-svc.megabank-pg.svc.cluster.local:9080
+        - name: ACCIDHISTORY_SVC_HOST
+          value: accidhist.megabank-pg.svc.cluster.local:9080
+        - name: LOGOUT_SVC_HOST
+          value: logout.megabank-pg.svc.cluster.local:9080
+        - name: ACCOUNTS_SVC_HOST
+          value: accounts.megabank-pg.svc.cluster.local:9080
+        - name: DEPOSIT_SVC_HOST
+          value: deposit.megabank-pg.svc.cluster.local:9080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: mbweb
+    app.kubernetes.io/component: mbweb
+    app.kubernetes.io/instance: mbweb
+    app.kubernetes.io/name: mbweb
+  name: mbweb
+  namespace: megabank-pg
+spec:
+  ports:
+  - name: 80-9080
+    protocol: TCP
+    port: 80
+    targetPort: 9080
+  - name: 443-9443
+    protocol: TCP
+    port: 443
+    targetPort: 9443
+  selector:
+    deployment: mbweb
+
