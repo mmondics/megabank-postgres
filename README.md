@@ -21,9 +21,7 @@
 
     Alternatively, deploy it using GitOps tooling such as ArgoCD, FluxCD, or Red Hat Advanced Cluster Management.
 
-4. Create a route using the templates [in this repo](routes), editing the hostname to reflect your OpenShift cluster.
-
-    Alternatively, simply expose the `mbweb` service.
+4. Expose the `mbweb` service as a route.
 
     ```
     oc expose service/mbweb
