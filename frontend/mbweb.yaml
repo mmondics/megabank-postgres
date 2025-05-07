@@ -1,10 +1,9 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: DaemonSet
 metadata:
   name: mbweb
   namespace: megabank-pg
 spec:
-  replicas: 2
   selector:
     matchLabels:
       deployment: mbweb

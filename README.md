@@ -1,7 +1,9 @@
 # megabank-postgres
- Implementation of MegaBank that uses PostgreSQL rather than Db2
+Implementation of MegaBank that uses EDB PostgreSQL rather than Db2
 
- ## Deploy with containerized PostgreSQL
+This branch requires that the EDB PostgreSQL operator is already deployed on the OpenShift cluster.
+
+ ## Deploy with EDB 
 
 1. Create a new project:
     ```

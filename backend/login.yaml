@@ -15,17 +15,24 @@ spec:
     spec:
       containers:
       - name: login
-        image: quay.io/mmondics/mbsvc-pg:v3-manifest
+        image: quay.io/mmondics/mbsvc-pg:v4-manifest
         imagePullPolicy: Always
         env:
+        - name: POSTGRES_DATABASE_NAME
+          value: app
+        - name: POSTGRES_USERNAME
+          value: app
         - name: POSTGRES_PASSWORD
-          value: passw0rd
+          valueFrom:
+            secretKeyRef:
+              name: cluster-microservice-app
+              key: password
         - name: JDBCNAME
           value: jdbc/MegaBankDataSource
         - name: POSTGRES_SSL_MODE
           value: disable
         - name: MBPG_SERVICE_HOST
-          value: mbpg.megabank-pg.svc.cluster.local
+          value: cluster-microservice-rw.megabank-pg.svc.cluster.local
         - name: MBPG_SERVICE_PORT
           value: '5432'
 ---
